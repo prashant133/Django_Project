@@ -1,0 +1,53 @@
+{% extends 'layout-admin.html' %}
+{% load bootstrap %}
+{% block title %}
+<title>Add User</title>
+{% endblock%}
+
+{% block content %}
+
+<div class="container">
+  <div class="row my-3">
+    <div class="col-sm-6 offset-sm-3">
+       <h1 class="text-center">Add New User</h1>
+      <hr>
+      <form action="" method="post" novalidate class="shadow p-5">
+       {% if messages %}
+      {% for message in messages %}
+      <p {% if message.tags %} class="alert alert-{{message.tags}} mb-5" {% endif %}> {{message}}</p>
+       {% endfor %}
+       {% endif %}
+      {% csrf_token %}
+        {% for fm in form %}
+        <div class="form-group mb-3">
+          {{fm.label_tag}} {{fm}}
+          <small class="text-danger"> {{fm.errors|striptags}} </small>
+        </div>
+        {% endfor %}
+        <input type="submit" value="Submit" class="btn btn-primary text-white">
+        <br>
+        <div class="text-center text-primary fw-bold">
+        {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+        <p class="alert alert-danger my-3">{{error}}</p>
+        {% endfor %}
+        {% endif %}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+    var form_fields = document.getElementsByTagName('input')
+    form_fields[1].placeholder = 'Enter Your Username';
+    form_fields[2].placeholder = 'Enter Your Email';
+    form_fields[3].placeholder = 'Enter Your Password';
+    form_fields[4].placeholder = 'Enter The Same Password';
+   
+
+    for (var field in form_fields){
+    field.className += ' my-2'
+    }
+</script>
+
+{% endblock %}
